@@ -7,5 +7,8 @@ class Enemy < Sprite
 
     def update
         self.x -= @speed
+        if self.x < 0 - image.width
+            self.vanish
+        end
     end
 end
