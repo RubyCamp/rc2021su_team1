@@ -46,8 +46,8 @@ module Game
 
             @time = @time - 1
 
-            if @time <60
-                $current_scene = :ending
+            if @time < 3000
+                $current_scene = :bad_ending
                 reset
             end
 
