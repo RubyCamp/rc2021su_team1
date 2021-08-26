@@ -2,6 +2,7 @@ require 'dxruby'
 
 require_relative 'title/director'
 require_relative 'game/director'
+require_relative 'ending/director'
 
 Window.width = 800
 Window.height = 600
@@ -11,7 +12,8 @@ $current_scene = :title
 
 directors = {
     :title => Title::Director.new,
-    :game => Game::Director.new
+    :game => Game::Director.new,
+    :ending => Ending::Director.new
 }
 
 Window.loop do

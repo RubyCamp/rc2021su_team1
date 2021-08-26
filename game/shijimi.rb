@@ -19,4 +19,8 @@ class Shijimi < Sprite
     def shot
         self.vanish
     end
+
+    def hit
+        self.vanish
+    end
 end

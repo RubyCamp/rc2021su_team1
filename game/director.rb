@@ -4,20 +4,38 @@ require_relative 'shijimi'
 require_relative 'omamori'
 require_relative 'grape'
 require_relative 'meat'
+require_relative 'omamori_enemy'
+require_relative 'grape_enemy'
+require_relative 'meat_enemy'
+
 
 module Game
     class Director
         attr_accessor :score 
         def initialize
+            @n = 2
             @score = 0
             $high_score = 0
             @time = 3659
             @bg = Image.load('images/bg_game.jpg')
             @player = Player.new
             @shijimi_enemies = []
-            5.times do
-                @shijimi_enemies << Shijimi_enemy.new(rand(50)+805, rand(300)-300, rand(1..3)+rand, self)
+            @n.times do
+                @shijimi_enemies << Shijimi_enemy.new(rand(50)+805, rand(300)-125, rand(1..3)+rand, self)
             end
+            @omamori_enemies = []
+            @n.times do
+                @omamori_enemies << Omamori_enemy.new(rand(50)+805, rand(300)-300, rand(1..3)+rand, self)
+            end
+            @grape_enemies = []
+            @n.times do
+                @grape_enemies << Grape_enemy.new(rand(50)+805, rand(300)-1100, rand(1..3)+rand, self)
+            end
+            @meat_enemies = []
+            @n.times do
+                @meat_enemies << Meat_enemy.new(rand(50)+805, rand(300)-650, rand(1..3)+rand, self)
+            end
+
             @shijimi = []
             @omamori = [] 
             @grape = []
@@ -28,8 +46,8 @@ module Game
 
             @time = @time - 1
 
-            if @time < 3000
-                $current_scene = :title
+            if @time <60
+                $current_scene = :ending
                 reset
             end
 
@@ -38,6 +56,10 @@ module Game
             @player.draw
 
             Sprite.update(@shijimi_enemies)
+            Sprite.update(@omamori_enemies)
+            Sprite.update(@grape_enemies)
+            Sprite.update(@meat_enemies)
+
             Sprite.update(@shijimi)
             Sprite.update(@omamori)
             Sprite.update(@grape)
@@ -45,6 +67,10 @@ module Game
 
             
             Sprite.draw(@shijimi_enemies)
+            Sprite.draw(@omamori_enemies)
+            Sprite.draw(@grape_enemies)
+            Sprite.draw(@meat_enemies)
+
             Sprite.draw(@shijimi)
             Sprite.draw(@omamori)
             Sprite.draw(@grape)
@@ -56,13 +82,42 @@ module Game
             Window.draw_font(500, 10, "ハイスコア：#{$high_score}", Font.new(32), {color: C_BLUE})
 
             Sprite.check(@shijimi,@shijimi_enemies)
+            Sprite.check(@omamori,@omamori_enemies)
+            Sprite.check(@grape,@grape_enemies)
+            Sprite.check(@meat,@meat_enemies)
+
+            Sprite.check(@shijimi_enemies,@omamori)
+            Sprite.check(@shijimi_enemies,@grape)
+            Sprite.check(@shijimi_enemies,@meat)
+
+            Sprite.check(@omamori_enemies,@shijimi)
+            Sprite.check(@omamori_enemies,@grape)
+            Sprite.check(@omamori_enemies,@meat)
+
+            Sprite.check(@grape_enemies,@shijimi)
+            Sprite.check(@grape_enemies,@omamori)
+            Sprite.check(@grape_enemies,@meat)
+
+            Sprite.check(@meat_enemies,@shijimi)
+            Sprite.check(@meat_enemies,@omamori)
+            Sprite.check(@meat_enemies,@grape)
 
             Sprite.clean(@shijimi_enemies)
-            (5-@shijimi_enemies.size).times do
-                @shijimi_enemies << Shijimi_enemy.new(rand(50)+805, rand(300), rand(1..3)+rand, self)
+            (@n-@shijimi_enemies.size).times do
+                @shijimi_enemies << Shijimi_enemy.new(rand(50)+805, rand(300)-125, rand(1..3)+rand, self)
             end
-            
-            @shijimi.delete_if{|shijimi| shijimi.vanished?}
+            Sprite.clean(@omamori_enemies)
+            (@n-@omamori_enemies.size).times do
+                @omamori_enemies << Omamori_enemy.new(rand(50)+805, rand(300)-300, rand(1..3)+rand, self)
+            end
+            Sprite.clean(@grape_enemies)
+            (@n-@grape_enemies.size).times do
+                @grape_enemies << Grape_enemy.new(rand(50)+805, rand(300)-1100, rand(1..3)+rand, self)
+            end
+            Sprite.clean(@meat_enemies)
+            (@n-@meat_enemies.size).times do
+                @meat_enemies << Meat_enemy.new(rand(50)+805, rand(300)-650, rand(1..3)+rand, self)
+            end
 
             if Input.key_push?(K_Z)
                 @shijimi << Shijimi.new(@player.x-200, @player.y-100, 5)
@@ -71,11 +126,17 @@ module Game
                 @omamori << Omamori.new(@player.x-390, @player.y-400, 5)
             end
             if Input.key_push?(K_C)
-                    @grape << Grape.new(@player.x-250, @player.y-300, 5)
+                @grape << Grape.new(@player.x-250, @player.y-300, 5)
             end
             if Input.key_push?(K_V)
                 @meat << Meat.new(@player.x-300, @player.y-300, 5)
             end
+
+            Sprite.clean(@shijimi)
+            Sprite.clean(@omamori)
+            Sprite.clean(@grape)
+            Sprite.clean(@meat)
+
         end
         def reset
             if @score > $high_score

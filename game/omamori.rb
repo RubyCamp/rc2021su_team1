@@ -17,5 +17,11 @@ class Omamori < Sprite
         end
     end
 
-   
+    def shot
+        self.vanish
+    end
+
+    def hit
+        self.vanish
+    end
 end

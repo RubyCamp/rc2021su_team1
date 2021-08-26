@@ -1,6 +1,6 @@
 class Grape < Sprite
     def initialize(x, y, speed)
-        image = Image.load('images/Grape.png')
+        image = Image.load('images/grape.png')
         self.scale_x = 0.2
         self.scale_y = 0.2
         #image.set_color_key(C_WHITE)
@@ -17,5 +17,11 @@ class Grape < Sprite
         end
     end
 
-   
+    def shot
+        self.vanish
+    end
+
+    def hit
+        self.vanish
+    end
 end
