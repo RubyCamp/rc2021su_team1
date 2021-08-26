@@ -1,6 +1,9 @@
-class Bullet < Sprite
+class Omamori < Sprite
     def initialize(x, y, speed)
-        image = Image.load('images/apple.png')
+        image = Image.load('images/omamori.png')
+        self.scale_x = 0.2
+        self.scale_y = 0.2
+        image.set_color_key(C_WHITE)
         @speed = speed
         self.x = x
         self.y = y
@@ -14,7 +17,5 @@ class Bullet < Sprite
         end
     end
 
-    def shot
-        self.vanish
-    end
+   
 end

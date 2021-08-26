@@ -1,6 +1,9 @@
-class Enemy < Sprite
+class Shijimi_enemy < Sprite
     def initialize(x, y, speed, director)
-        image = Image.load('images/normal_enemy.png')
+        image = Image.load('images/shijimi_enemy.jpg')
+        image.set_color_key(C_WHITE)
+        self.scale_x = 0.2
+        self.scale_y = 0.2
         @speed = speed
         @director = director
         super(x, y, image)
