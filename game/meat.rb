@@ -1,6 +1,9 @@
-class Bullet < Sprite
+class Meat < Sprite
     def initialize(x, y, speed)
-        image = Image.load('images/apple.png')
+        image = Image.load('images/meat.png')
+        self.scale_x = 0.2
+        self.scale_y = 0.2
+        #image.set_color_key(C_WHITE)
         @speed = speed
         self.x = x
         self.y = y
@@ -15,6 +18,10 @@ class Bullet < Sprite
     end
 
     def shot
+        self.vanish
+    end
+
+    def hit
         self.vanish
     end
 end

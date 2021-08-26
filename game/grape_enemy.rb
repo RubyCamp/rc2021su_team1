@@ -1,6 +1,9 @@
-class Enemy < Sprite
+class Grape_enemy < Sprite
     def initialize(x, y, speed, director)
-        image = Image.load('images/normal_enemy.png')
+        image = Image.load('images/grape_enemy.png')
+        #image.set_color_key(C_WHITE)
+        self.scale_x = 0.08
+        self.scale_y = 0.08
         @speed = speed
         @director = director
         super(x, y, image)
@@ -15,6 +18,12 @@ class Enemy < Sprite
 
     def hit
         self.vanish
+        @director.score = @director.score + 10
+    end
+    
+    def shot
+        self.vanish
         @director.score = @director.score + 1
     end
+
 end
