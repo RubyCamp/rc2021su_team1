@@ -46,7 +46,7 @@ module Game
 
             @time = @time - 1
 
-            if @time < 
+            if @time < 60
                 if @score < 10
                     $current_scene = :bad_ending
                 elsif @score < 15
