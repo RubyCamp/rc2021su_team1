@@ -47,11 +47,11 @@ module Game
             @time = @time - 1
 
             if @time < 60
-                if @score < 10
+                if @score < 50
                     $current_scene = :bad_ending
-                elsif @score < 15
+                elsif @score < 200
                     $current_scene = :normal_ending
-                elsif @score < 20
+                elsif @score < 400
                     $current_scene = :good_ending
                 else 
                     $current_scene = :best_ending
